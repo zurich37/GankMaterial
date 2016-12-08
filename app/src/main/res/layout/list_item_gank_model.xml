@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="88dp"
+    android:background="@android:drawable/list_selector_background">
+
+    <ImageView
+        android:id="@+id/iv_gank_model_icon"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/fab_margin"
+        android:layout_marginLeft="@dimen/list_top_margin"
+        android:src="@mipmap/ic_launcher" />
+
+    <TextView
+        android:id="@+id/tv_gank_model_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:layout_marginTop="@dimen/list_top_margin"
+        android:layout_toLeftOf="@id/iv_gank_model_icon"
+        android:ellipsize="end"
+        android:lines="2"
+        android:maxLines="2"
+        android:paddingLeft="16dp"
+        android:text="来得及付款时塑料馈说来得及付款时塑料袋放假了涉及到了反馈说"
+        android:textSize="@dimen/text_title_normal" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_gank_model_title"
+        android:orientation="horizontal"
+        android:paddingLeft="16dp">
+
+        <TextView
+            android:id="@+id/tv_gank_author"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_perm_identity_grey"
+            android:drawablePadding="3dp"
+            android:gravity="center_vertical"
+            android:paddingRight="8dp"
+            android:text="zurich"
+            android:textSize="@dimen/text_normal" />
+
+        <TextView
+            android:id="@+id/tv_gank_creat_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_access_time_grey"
+            android:drawablePadding="3dp"
+            android:gravity="center_vertical"
+            android:paddingRight="8dp"
+            android:text="2016.11.24"
+            android:textSize="@dimen/text_normal" />
+    </LinearLayout>
+
+    <View
+        style="@style/ListDividerMatch"
+        android:layout_alignParentBottom="true" />
+</RelativeLayout>

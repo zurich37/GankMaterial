@@ -5,4 +5,8 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+    <string name="tab_all">全部</string>
+    <string name="tab_android">Android</string>
+    <string name="tab_iOS">iOS</string>
+    <string name="tab_fuli">福利</string>
 </resources>
