@@ -14,7 +14,5 @@ public interface BaseView<T> {
 
     void showEmpty(String msg, View.OnClickListener onClickListener);
 
-    void showEmpty(String msg, View.OnClickListener onClickListener, int imageId);
-
     void showNetError(View.OnClickListener onClickListener);
 }

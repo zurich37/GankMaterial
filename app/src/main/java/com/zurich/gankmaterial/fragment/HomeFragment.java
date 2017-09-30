@@ -1,15 +1,12 @@
 package com.zurich.gankmaterial.fragment;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.zurich.gankmaterial.R;
 import com.zurich.gankmaterial.adapter.HomeTabFragmentAdapter;
@@ -37,18 +34,14 @@ public class HomeFragment extends BaseFragment {
         return new HomeFragment();
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_main, container, false);
-        ButterKnife.bind(this, view);
-
-        initView();
-
-        return view;
+    protected int getLayoutId() {
+        return R.layout.fragment_main;
     }
 
-    private void initView() {
+    @Override
+    protected void initView(View view, Bundle savedInstanceState) {
+        ButterKnife.bind(this, view);
         fabMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -8,7 +8,7 @@ import android.content.Context;
  * Created by weixinfei on 2016/11/25.
  */
 public class GankApplication extends Application {
-    private GankApplication instance;
+    private static GankApplication instance;
 
     @Override
     public void onCreate() {
@@ -17,7 +17,7 @@ public class GankApplication extends Application {
 
     }
 
-    public Context getContext() {
+    public static Context getContext() {
         return instance.getApplicationContext();
     }
 }

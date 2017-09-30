@@ -1,20 +1,26 @@
 package com.zurich.gankmaterial.adapter;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.zurich.gankmaterial.data.source.remote.AndroidRemoteDataSource;
+import com.zurich.gankmaterial.data.source.LocalAppInfoRepository;
+import com.zurich.gankmaterial.data.source.remote.GankRemoteDataSource;
 import com.zurich.gankmaterial.data.source.GankDataRepository;
-import com.zurich.gankmaterial.fragment.AndroidDataFragment;
+import com.zurich.gankmaterial.data.source.remote.LocalAppInfoRemoteDataSource;
+import com.zurich.gankmaterial.fragment.GankDataFragment;
+import com.zurich.gankmaterial.fragment.LocalAppInfoDataFragment;
 import com.zurich.gankmaterial.presenter.AndroidDataPresenter;
+import com.zurich.gankmaterial.presenter.LocalAppInfoDataPresenter;
+import com.zurich.gankmaterial.util.schedulers.ImmediateSchedulerProvider;
 
 /**
  * tab adapter
  */
 public class HomeTabFragmentAdapter extends FragmentPagerAdapter {
-    private String[] mTitles = new String[]{"Android"/*, "iOS", "休息视频", "拓展资源", "前端", "福利"*/};
-    private AndroidDataFragment androidDataFragment;
+    private String[] mTitles = new String[]{"Android", "iOS", /*"休息视频", "拓展资源", "前端", "福利"*/};
+    private GankDataFragment gankDataFragment;
 
     public HomeTabFragmentAdapter(FragmentManager fm) {
         super(fm);
@@ -24,22 +30,23 @@ public class HomeTabFragmentAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                androidDataFragment = (AndroidDataFragment) AndroidDataFragment.newInstance(0);
-                AndroidDataPresenter androidDataPresenter = new AndroidDataPresenter(GankDataRepository.getInstance(AndroidRemoteDataSource.getInstance()), androidDataFragment);
-                return androidDataFragment;
+                gankDataFragment = (GankDataFragment) GankDataFragment.newInstance(0);
+                AndroidDataPresenter androidDataPresenter = new AndroidDataPresenter(GankDataRepository.getInstance(GankRemoteDataSource.getInstance()), gankDataFragment);
+                return gankDataFragment;
             case 1:
-                AndroidDataFragment androidDataFragment1 = (AndroidDataFragment) AndroidDataFragment.newInstance(0);
-                new AndroidDataPresenter(GankDataRepository.getInstance(AndroidRemoteDataSource.getInstance()), androidDataFragment1);
-                return androidDataFragment1;
+                LocalAppInfoDataFragment localAppInfoDataFragment = LocalAppInfoDataFragment.newInstance(new Bundle());
+                ImmediateSchedulerProvider schedulerProvider = new ImmediateSchedulerProvider();
+                new LocalAppInfoDataPresenter(LocalAppInfoRepository.getInstance(LocalAppInfoRemoteDataSource.getInstance()), localAppInfoDataFragment, schedulerProvider);
+                return localAppInfoDataFragment;
             case 2:
-                AndroidDataFragment androidDataFragment2 = (AndroidDataFragment) AndroidDataFragment.newInstance(0);
-                new AndroidDataPresenter(GankDataRepository.getInstance(AndroidRemoteDataSource.getInstance()), androidDataFragment2);
+                GankDataFragment gankDataFragment2 = (GankDataFragment) GankDataFragment.newInstance(0);
+                new AndroidDataPresenter(GankDataRepository.getInstance(GankRemoteDataSource.getInstance()), gankDataFragment2);
             case 3:
-                AndroidDataFragment androidDataFragment3 = (AndroidDataFragment) AndroidDataFragment.newInstance(0);
-                new AndroidDataPresenter(GankDataRepository.getInstance(AndroidRemoteDataSource.getInstance()), androidDataFragment3);
+                GankDataFragment gankDataFragment3 = (GankDataFragment) GankDataFragment.newInstance(0);
+                new AndroidDataPresenter(GankDataRepository.getInstance(GankRemoteDataSource.getInstance()), gankDataFragment3);
             case 4:
-                AndroidDataFragment androidDataFragment4 = (AndroidDataFragment) AndroidDataFragment.newInstance(0);
-                new AndroidDataPresenter(GankDataRepository.getInstance(AndroidRemoteDataSource.getInstance()), androidDataFragment4);
+                GankDataFragment gankDataFragment4 = (GankDataFragment) GankDataFragment.newInstance(0);
+                new AndroidDataPresenter(GankDataRepository.getInstance(GankRemoteDataSource.getInstance()), gankDataFragment4);
         }
         return null;
     }

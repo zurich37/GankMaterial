@@ -2,9 +2,10 @@ package com.zurich.gankmaterial.presenter;
 
 import android.support.annotation.NonNull;
 
-import com.zurich.gankmaterial.contract.AndroidContract;
+import com.zurich.gankmaterial.contract.AndroidDataContract;
 import com.zurich.gankmaterial.data.GankData;
 import com.zurich.gankmaterial.data.source.GankDataRepository;
+import com.zurich.gankmaterial.fragment.GankDataFragment;
 import com.zurich.gankmaterial.retrofit.subscriber.ProgressSubscriber;
 
 import java.util.List;
@@ -15,23 +16,23 @@ import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
 /**
- * Listens to user actions from the UI ({@link com.zurich.gankmaterial.fragment.AndroidDataFragment}), retrieves the data and updates the
+ * Listens to user actions from the UI ({@link GankDataFragment}), retrieves the data and updates the
  * UI as required.
  * Created by weixinfei on 2016/11/28.
  */
-public class AndroidDataPresenter implements AndroidContract.Presenter {
+public class AndroidDataPresenter implements AndroidDataContract.Presenter {
     @NonNull
     private final GankDataRepository mGanksRepository;
 
     @NonNull
-    private final AndroidContract.View mView;
+    private final AndroidDataContract.View mView;
 
     private boolean mFirstLoad = true;
 
     @NonNull
     private CompositeSubscription mSubscriptions;
 
-    public AndroidDataPresenter(@NonNull GankDataRepository ganksRepository, @NonNull AndroidContract.View view) {
+    public AndroidDataPresenter(@NonNull GankDataRepository ganksRepository, @NonNull AndroidDataContract.View view) {
         this.mGanksRepository = ganksRepository;
         this.mView = view;
         mSubscriptions = new CompositeSubscription();
