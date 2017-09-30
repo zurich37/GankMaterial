@@ -1,4 +1,4 @@
-package com.zurich.gankmaterial.contract;
+package com.zurich.gankmaterial.localApps;
 
 import com.zurich.gankmaterial.data.LocalAppInfo;
 import com.zurich.gankmaterial.presenter.BasePresenter;

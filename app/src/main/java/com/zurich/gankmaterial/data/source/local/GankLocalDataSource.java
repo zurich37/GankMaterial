@@ -12,15 +12,15 @@ import rx.Observable;
 /**
  * Created by weixinfei on 2016/11/29.
  */
-public class AndroidLocalDataSource implements GankDataSource {
+public class GankLocalDataSource implements GankDataSource {
 
-    private static AndroidLocalDataSource INSTANCE;
+    private static GankLocalDataSource INSTANCE;
 
     private List<GankData> datas;
 
-    public static AndroidLocalDataSource getInstance() {
+    public static GankLocalDataSource getInstance() {
         if (INSTANCE == null) {
-            INSTANCE = new AndroidLocalDataSource();
+            INSTANCE = new GankLocalDataSource();
         }
         return INSTANCE;
     }

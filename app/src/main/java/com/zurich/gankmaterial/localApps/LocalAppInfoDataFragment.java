@@ -1,4 +1,4 @@
-package com.zurich.gankmaterial.fragment;
+package com.zurich.gankmaterial.localApps;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,7 +7,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.zurich.gankmaterial.R;
-import com.zurich.gankmaterial.contract.LocalAppInfoDataContact;
+import com.zurich.gankmaterial.base.BaseFragment;
 import com.zurich.gankmaterial.data.LocalAppInfo;
 
 import java.util.List;

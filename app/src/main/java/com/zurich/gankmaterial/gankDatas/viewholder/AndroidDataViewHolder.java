@@ -1,4 +1,4 @@
-package com.zurich.gankmaterial.adapter.viewholder;
+package com.zurich.gankmaterial.gankDatas.viewholder;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;

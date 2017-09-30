@@ -1,4 +1,4 @@
-package com.zurich.gankmaterial.activity;
+package com.zurich.gankmaterial.base;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;

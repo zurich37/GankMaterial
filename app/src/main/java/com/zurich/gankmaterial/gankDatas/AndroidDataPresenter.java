@@ -1,11 +1,9 @@
-package com.zurich.gankmaterial.presenter;
+package com.zurich.gankmaterial.gankDatas;
 
 import android.support.annotation.NonNull;
 
-import com.zurich.gankmaterial.contract.AndroidDataContract;
 import com.zurich.gankmaterial.data.GankData;
 import com.zurich.gankmaterial.data.source.GankDataRepository;
-import com.zurich.gankmaterial.fragment.GankDataFragment;
 import com.zurich.gankmaterial.retrofit.subscriber.ProgressSubscriber;
 
 import java.util.List;
@@ -20,19 +18,19 @@ import rx.subscriptions.CompositeSubscription;
  * UI as required.
  * Created by weixinfei on 2016/11/28.
  */
-public class AndroidDataPresenter implements AndroidDataContract.Presenter {
+public class AndroidDataPresenter implements GankDatasContract.Presenter {
     @NonNull
     private final GankDataRepository mGanksRepository;
 
     @NonNull
-    private final AndroidDataContract.View mView;
+    private final GankDatasContract.View mView;
 
     private boolean mFirstLoad = true;
 
     @NonNull
     private CompositeSubscription mSubscriptions;
 
-    public AndroidDataPresenter(@NonNull GankDataRepository ganksRepository, @NonNull AndroidDataContract.View view) {
+    public AndroidDataPresenter(@NonNull GankDataRepository ganksRepository, @NonNull GankDatasContract.View view) {
         this.mGanksRepository = ganksRepository;
         this.mView = view;
         mSubscriptions = new CompositeSubscription();

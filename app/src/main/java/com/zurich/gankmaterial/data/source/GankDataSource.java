@@ -4,6 +4,8 @@ import android.support.annotation.NonNull;
 
 import com.zurich.gankmaterial.data.GankData;
 
+import java.util.List;
+
 import rx.Observable;
 
 /**
@@ -12,7 +14,7 @@ import rx.Observable;
 
 public interface GankDataSource {
 
-    Observable getGankDatas();
+    Observable<List<GankData>> getGankDatas();
 
     Observable<GankData> getGankData(@NonNull String gankId);
 

@@ -1,8 +1,7 @@
-package com.zurich.gankmaterial.presenter;
+package com.zurich.gankmaterial.localApps;
 
 import android.support.annotation.NonNull;
 
-import com.zurich.gankmaterial.contract.LocalAppInfoDataContact;
 import com.zurich.gankmaterial.data.LocalAppInfo;
 import com.zurich.gankmaterial.data.source.LocalAppInfoRepository;
 import com.zurich.gankmaterial.util.schedulers.BaseSchedulerProvider;

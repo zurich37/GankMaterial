@@ -1,4 +1,4 @@
-package com.zurich.gankmaterial.fragment;
+package com.zurich.gankmaterial.base;
 
 import android.content.Context;
 import android.os.Bundle;

@@ -1,4 +1,4 @@
-package com.zurich.gankmaterial.adapter;
+package com.zurich.gankmaterial.mainPage;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,10 +9,10 @@ import com.zurich.gankmaterial.data.source.LocalAppInfoRepository;
 import com.zurich.gankmaterial.data.source.remote.GankRemoteDataSource;
 import com.zurich.gankmaterial.data.source.GankDataRepository;
 import com.zurich.gankmaterial.data.source.remote.LocalAppInfoRemoteDataSource;
-import com.zurich.gankmaterial.fragment.GankDataFragment;
-import com.zurich.gankmaterial.fragment.LocalAppInfoDataFragment;
-import com.zurich.gankmaterial.presenter.AndroidDataPresenter;
-import com.zurich.gankmaterial.presenter.LocalAppInfoDataPresenter;
+import com.zurich.gankmaterial.gankDatas.GankDataFragment;
+import com.zurich.gankmaterial.localApps.LocalAppInfoDataFragment;
+import com.zurich.gankmaterial.gankDatas.AndroidDataPresenter;
+import com.zurich.gankmaterial.localApps.LocalAppInfoDataPresenter;
 import com.zurich.gankmaterial.util.schedulers.ImmediateSchedulerProvider;
 
 /**

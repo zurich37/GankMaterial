@@ -1,4 +1,4 @@
-package com.zurich.gankmaterial.activity;
+package com.zurich.gankmaterial.mainPage;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,8 +12,8 @@ import android.view.MenuItem;
 import android.widget.FrameLayout;
 
 import com.zurich.gankmaterial.R;
-import com.zurich.gankmaterial.fragment.BaseFragment;
-import com.zurich.gankmaterial.fragment.HomeFragment;
+import com.zurich.gankmaterial.base.BaseActivity;
+import com.zurich.gankmaterial.base.BaseFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

@@ -1,4 +1,4 @@
-package com.zurich.gankmaterial.contract;
+package com.zurich.gankmaterial.gankDatas;
 
 import com.zurich.gankmaterial.data.GankData;
 import com.zurich.gankmaterial.presenter.BasePresenter;
@@ -10,7 +10,7 @@ import java.util.List;
  * This specifies the contract between the view and the presenter.
  * Created by weixinfei on 2016/11/28.
  */
-public interface AndroidDataContract {
+public interface GankDatasContract {
     interface View extends BaseView<Presenter>{
         void showDatas(List<GankData> datas);
     }

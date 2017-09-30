@@ -1,4 +1,4 @@
-package com.zurich.gankmaterial.fragment;
+package com.zurich.gankmaterial.mainPage;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -9,7 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.zurich.gankmaterial.R;
-import com.zurich.gankmaterial.adapter.HomeTabFragmentAdapter;
+import com.zurich.gankmaterial.base.BaseFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

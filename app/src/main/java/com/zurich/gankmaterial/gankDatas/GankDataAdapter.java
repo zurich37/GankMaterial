@@ -1,4 +1,4 @@
-package com.zurich.gankmaterial.adapter;
+package com.zurich.gankmaterial.gankDatas;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -6,17 +6,17 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.zurich.gankmaterial.R;
-import com.zurich.gankmaterial.adapter.viewholder.AndroidDataViewHolder;
 import com.zurich.gankmaterial.data.GankData;
+import com.zurich.gankmaterial.gankDatas.viewholder.AndroidDataViewHolder;
 
 import java.util.List;
 
 /**
  * Created by weixinfei on 2016/11/28.
  */
-public class AndroidDataAdapter extends RecyclerView.Adapter<AndroidDataViewHolder> {
+public class GankDataAdapter extends RecyclerView.Adapter<AndroidDataViewHolder> {
     private List<GankData> datas;
-    public AndroidDataAdapter(List<GankData> datas) {
+    public GankDataAdapter(List<GankData> datas) {
         this.datas = datas;
     }
 

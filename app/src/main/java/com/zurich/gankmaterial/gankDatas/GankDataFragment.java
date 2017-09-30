@@ -1,4 +1,4 @@
-package com.zurich.gankmaterial.fragment;
+package com.zurich.gankmaterial.gankDatas;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,8 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.zurich.gankmaterial.R;
-import com.zurich.gankmaterial.adapter.AndroidDataAdapter;
-import com.zurich.gankmaterial.contract.AndroidDataContract;
+import com.zurich.gankmaterial.base.BaseFragment;
 import com.zurich.gankmaterial.data.GankData;
 import com.zurich.gankmaterial.widget.HintView;
 
@@ -23,15 +22,15 @@ import butterknife.ButterKnife;
  * 各Gank.io数据页面
  * Created by weixinfei on 2016/11/27.
  */
-public class GankDataFragment extends BaseFragment implements AndroidDataContract.View {
+public class GankDataFragment extends BaseFragment implements GankDatasContract.View {
 
     @BindView(R.id.rv_android_list)
     RecyclerView recyclerView;
     @BindView(R.id.hint_android_list_hint)
     HintView hintView;
-    private AndroidDataContract.Presenter mPresenter;
+    private GankDatasContract.Presenter mPresenter;
     private List<GankData> mList;
-    private AndroidDataAdapter mAdapter;
+    private GankDataAdapter mAdapter;
 
     public static Fragment newInstance(int i) {
 
@@ -46,7 +45,7 @@ public class GankDataFragment extends BaseFragment implements AndroidDataContrac
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
         ButterKnife.bind(this, view);
-        mAdapter = new AndroidDataAdapter(new ArrayList<GankData>(0));
+        mAdapter = new GankDataAdapter(new ArrayList<GankData>(0));
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
@@ -83,7 +82,7 @@ public class GankDataFragment extends BaseFragment implements AndroidDataContrac
     }
 
     @Override
-    public void setPresenter(AndroidDataContract.Presenter presenter) {
+    public void setPresenter(GankDatasContract.Presenter presenter) {
         mPresenter = presenter;
     }
 
