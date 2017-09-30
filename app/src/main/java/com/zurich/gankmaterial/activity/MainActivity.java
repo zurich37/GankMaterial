@@ -17,9 +17,8 @@ import com.zurich.gankmaterial.fragment.HomeFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import me.yokeyword.fragmentation.SupportActivity;
 
-public class MainActivity extends SupportActivity
+public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener, BaseFragment.OnFragmentOpenDrawerListener {
 
     @BindView(R.id.fl_container)
