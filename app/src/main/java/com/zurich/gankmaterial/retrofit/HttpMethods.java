@@ -5,6 +5,7 @@ import com.zurich.gankmaterial.data.GankData;
 import com.zurich.gankmaterial.retrofit.http.ApiException;
 import com.zurich.gankmaterial.retrofit.http.HttpResult;
 import com.zurich.gankmaterial.retrofit.http.OKHttpFactory;
+import com.zurich.gankmaterial.util.schedulers.SchedulerProvider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,10 +16,7 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import rx.Observable;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
-import rx.schedulers.Schedulers;
 
 /**
  * 网络请求API
@@ -54,16 +52,14 @@ public class HttpMethods {
     }
 
     /**
-     * 添加线程管理并订阅
+     * 添加线程管理
      *
      * @param o 观察者
-     * @param s 订阅者
      */
-    private <T> void toSubscribe(Observable<T> o, Subscriber<T> s) {
-        o.subscribeOn(Schedulers.io())
-                .unsubscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(s);
+    private <T> Observable<T> bindSchedulers(Observable<T> o) {
+        return o.subscribeOn(SchedulerProvider.getInstance().io())
+                .unsubscribeOn(SchedulerProvider.getInstance().io())
+                .observeOn(SchedulerProvider.getInstance().ui());
     }
 
     /**
@@ -81,14 +77,27 @@ public class HttpMethods {
     }
 
     /**
-     * 获取谷歌框架apk
+     * Gank.io随机数据
      *
      * @param type 内容类型
      * @param size 请求数目
      */
-    public Observable getGankRandomDataList(String type, int size) {
-        Observable<List<GankData>> observable = gankService.getGankRandomDatas(type, size)
-                .map(new HttpResultFunc<List<GankData>>());
-        return observable;
+    public Observable<List<GankData>> getGankRandomDataList(String type, int size) {
+        return bindSchedulers(
+                gankService.getGankRandomDatas(type, size).map(new HttpResultFunc<List<GankData>>())
+        );
+    }
+
+    /**
+     * Gank.io普通分类数据
+     * @param type
+     * @param size
+     * @param page
+     * @return
+     */
+    public Observable<List<GankData>> getGankDatas(String type, int size, int page) {
+        return bindSchedulers(
+                gankService.getGankDatas(type, size, page).map(new HttpResultFunc<List<GankData>>())
+        );
     }
 }

@@ -27,8 +27,8 @@ public class GankRemoteDataSource implements GankDataSource {
     }
 
     @Override
-    public Observable<List<GankData>> getGankDatas() {
-        return HttpMethods.getInstance().getGankRandomDataList(GankConstans.REQUEST_TYPE_ANDROID, GankConstans.REQUEST_NORMAL_SIZE);
+    public Observable<List<GankData>> getGankDatas(String type, int page) {
+        return HttpMethods.getInstance().getGankDatas(type, GankConstans.REQUEST_NORMAL_SIZE, page);
     }
 
     @Override

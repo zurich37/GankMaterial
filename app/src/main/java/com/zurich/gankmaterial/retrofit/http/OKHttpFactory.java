@@ -1,12 +1,15 @@
 package com.zurich.gankmaterial.retrofit.http;
 
 
+import com.zurich.gankmaterial.BuildConfig;
+
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Response;
+import okhttp3.logging.HttpLoggingInterceptor;
 
 /**
  * 创建OkHttpClient
@@ -21,9 +24,13 @@ public enum OKHttpFactory {
     private static final int TIMEOUT_CONNECTION = 25;
 
     OKHttpFactory() {
-        OkHttpClient.Builder client = new OkHttpClient.Builder();
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
         //失败重连
-        client.retryOnConnectionFailure(true)
+        //打印日志拦截器
+        HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
+        httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+
+        builder.retryOnConnectionFailure(true)
                 //time out
                 .readTimeout(TIMEOUT_READ, TimeUnit.SECONDS)
                 .connectTimeout(TIMEOUT_CONNECTION, TimeUnit.SECONDS)
@@ -37,8 +44,11 @@ public enum OKHttpFactory {
             }
         });
 
-        okHttpClient = client.build();
         //增加拦截器
+        if (BuildConfig.DEBUG) {
+            builder.addInterceptor(httpLoggingInterceptor);
+        }
+        okHttpClient = builder.build();
 
     }
 

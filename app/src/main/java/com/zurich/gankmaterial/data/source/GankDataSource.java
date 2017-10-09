@@ -14,7 +14,7 @@ import rx.Observable;
 
 public interface GankDataSource {
 
-    Observable<List<GankData>> getGankDatas();
+    Observable<List<GankData>> getGankDatas(String type, int page);
 
     Observable<GankData> getGankData(@NonNull String gankId);
 

@@ -26,7 +26,7 @@ public class GankLocalDataSource implements GankDataSource {
     }
 
     @Override
-    public Observable<List<GankData>> getGankDatas() {
+    public Observable<List<GankData>> getGankDatas(String type, int page) {
         return null;
     }
 

@@ -18,7 +18,7 @@ import rx.subscriptions.CompositeSubscription;
  * UI as required.
  * Created by weixinfei on 2016/11/28.
  */
-public class AndroidDataPresenter implements GankDatasContract.Presenter {
+public class GankDatasPresenter implements GankDatasContract.Presenter {
     @NonNull
     private final GankDataRepository mGanksRepository;
 
@@ -27,10 +27,11 @@ public class AndroidDataPresenter implements GankDatasContract.Presenter {
 
     private boolean mFirstLoad = true;
 
+    private int startPage = 1;
     @NonNull
     private CompositeSubscription mSubscriptions;
 
-    public AndroidDataPresenter(@NonNull GankDataRepository ganksRepository, @NonNull GankDatasContract.View view) {
+    public GankDatasPresenter(@NonNull GankDataRepository ganksRepository, @NonNull GankDatasContract.View view) {
         this.mGanksRepository = ganksRepository;
         this.mView = view;
         mSubscriptions = new CompositeSubscription();
@@ -39,20 +40,26 @@ public class AndroidDataPresenter implements GankDatasContract.Presenter {
 
     @Override
     public void loadDatas(boolean isForceUpdate) {
-        loadGankDatas(mFirstLoad || isForceUpdate, mFirstLoad);
+        loadGankDatas(mFirstLoad || isForceUpdate, mFirstLoad, !isForceUpdate);
         this.mFirstLoad = false;
     }
 
-    private void loadGankDatas(boolean isForceUpdate, boolean isShowUILoading) {
+    private void loadGankDatas(boolean isForceUpdate, boolean isShowUILoading, final boolean isLoadMore) {
         if (isShowUILoading) {
             mView.showLoading("加载中");
         }
         if (isForceUpdate) {
+            startPage = 1;
             mGanksRepository.refreshDatas();
+        }
+
+        if (isLoadMore) {
+            startPage++;
         }
         mSubscriptions.clear();
         Subscription subscribe = mGanksRepository
-                .getGankDatas()
+                .getGankDatas(null, startPage)
+                .compose(mView.<List<GankData>>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -64,17 +71,21 @@ public class AndroidDataPresenter implements GankDatasContract.Presenter {
 
                     @Override
                     public void onNext(List<GankData> o) {
-                        processDatas(o);
+                        processDatas(o, isLoadMore);
                     }
                 });
         mSubscriptions.add(subscribe);
     }
 
-    private void processDatas(@NonNull List<GankData> datas) {
+    private void processDatas(@NonNull List<GankData> datas, boolean isLoadMore) {
         if (datas.isEmpty()) {
             processEmpty();
         } else {
-            mView.showDatas(datas);
+            if (!isLoadMore) {
+                mView.showDatas(datas);
+            } else {
+                mView.showMoreDatas(datas);
+            }
         }
     }
 
@@ -90,7 +101,7 @@ public class AndroidDataPresenter implements GankDatasContract.Presenter {
 
     @Override
     public void subscribe() {
-        loadDatas(false);
+        loadDatas(true);
     }
 
     @Override

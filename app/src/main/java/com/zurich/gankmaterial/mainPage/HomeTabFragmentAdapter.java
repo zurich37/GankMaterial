@@ -1,25 +1,21 @@
 package com.zurich.gankmaterial.mainPage;
 
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.zurich.gankmaterial.data.source.LocalAppInfoRepository;
+import com.zurich.gankmaterial.data.source.GankAndroidDataRepository;
+import com.zurich.gankmaterial.data.source.GankIOSDataRepository;
+import com.zurich.gankmaterial.data.source.GankWebDataRepository;
 import com.zurich.gankmaterial.data.source.remote.GankRemoteDataSource;
-import com.zurich.gankmaterial.data.source.GankDataRepository;
-import com.zurich.gankmaterial.data.source.remote.LocalAppInfoRemoteDataSource;
 import com.zurich.gankmaterial.gankDatas.GankDataFragment;
-import com.zurich.gankmaterial.localApps.LocalAppInfoDataFragment;
-import com.zurich.gankmaterial.gankDatas.AndroidDataPresenter;
-import com.zurich.gankmaterial.localApps.LocalAppInfoDataPresenter;
-import com.zurich.gankmaterial.util.schedulers.ImmediateSchedulerProvider;
+import com.zurich.gankmaterial.gankDatas.GankDatasPresenter;
 
 /**
  * tab adapter
  */
 public class HomeTabFragmentAdapter extends FragmentPagerAdapter {
-    private String[] mTitles = new String[]{"Android", "iOS", /*"休息视频", "拓展资源", "前端", "福利"*/};
+    private String[] mTitles = new String[]{"Android", "iOS", "前端"/*"休息视频", "拓展资源", "福利"*/};
     private GankDataFragment gankDataFragment;
 
     public HomeTabFragmentAdapter(FragmentManager fm) {
@@ -31,22 +27,16 @@ public class HomeTabFragmentAdapter extends FragmentPagerAdapter {
         switch (position) {
             case 0:
                 gankDataFragment = (GankDataFragment) GankDataFragment.newInstance(0);
-                AndroidDataPresenter androidDataPresenter = new AndroidDataPresenter(GankDataRepository.getInstance(GankRemoteDataSource.getInstance()), gankDataFragment);
+                new GankDatasPresenter(GankAndroidDataRepository.getInstance(GankRemoteDataSource.getInstance()), gankDataFragment);
                 return gankDataFragment;
             case 1:
-                LocalAppInfoDataFragment localAppInfoDataFragment = LocalAppInfoDataFragment.newInstance(new Bundle());
-                ImmediateSchedulerProvider schedulerProvider = new ImmediateSchedulerProvider();
-                new LocalAppInfoDataPresenter(LocalAppInfoRepository.getInstance(LocalAppInfoRemoteDataSource.getInstance()), localAppInfoDataFragment, schedulerProvider);
-                return localAppInfoDataFragment;
+                GankDataFragment gankIOSDataFragment = (GankDataFragment) GankDataFragment.newInstance(0);
+                new GankDatasPresenter(GankIOSDataRepository.getInstance(GankRemoteDataSource.getInstance()), gankIOSDataFragment);
+                return gankIOSDataFragment;
             case 2:
-                GankDataFragment gankDataFragment2 = (GankDataFragment) GankDataFragment.newInstance(0);
-                new AndroidDataPresenter(GankDataRepository.getInstance(GankRemoteDataSource.getInstance()), gankDataFragment2);
-            case 3:
-                GankDataFragment gankDataFragment3 = (GankDataFragment) GankDataFragment.newInstance(0);
-                new AndroidDataPresenter(GankDataRepository.getInstance(GankRemoteDataSource.getInstance()), gankDataFragment3);
-            case 4:
-                GankDataFragment gankDataFragment4 = (GankDataFragment) GankDataFragment.newInstance(0);
-                new AndroidDataPresenter(GankDataRepository.getInstance(GankRemoteDataSource.getInstance()), gankDataFragment4);
+                GankDataFragment gankWebDataFragment = (GankDataFragment) GankDataFragment.newInstance(0);
+                new GankDatasPresenter(GankWebDataRepository.getInstance(GankRemoteDataSource.getInstance()), gankWebDataFragment);
+                return gankWebDataFragment;
         }
         return null;
     }

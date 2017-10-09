@@ -19,9 +19,7 @@ import rx.functions.Func1;
  * Concrete implementation to load tasks from the data sources into a cache.
  * Created by weixinfei on 2016/11/28.
  */
-public class GankDataRepository implements GankDataSource {
-    @Nullable
-    private static GankDataRepository INSTANCE = null;
+public abstract class GankDataRepository implements GankDataSource {
 
     @NonNull
     private final GankDataSource mRemoteDataSource;
@@ -40,29 +38,24 @@ public class GankDataRepository implements GankDataSource {
     @VisibleForTesting
     private boolean mCacheIsDirty = false;
 
-    private GankDataRepository(@NonNull GankDataSource dataSource) {
+    protected abstract String getRequestCode();
+
+    GankDataRepository(@NonNull GankDataSource dataSource) {
         this.mRemoteDataSource = dataSource;
     }
 
-    public static GankDataRepository getInstance(@NonNull GankDataSource dataSource) {
-        if (INSTANCE == null) {
-            INSTANCE = new GankDataRepository(dataSource);
-        }
-        return INSTANCE;
-    }
-
     @Override
-    public Observable<List<GankData>> getGankDatas() {
+    public Observable<List<GankData>> getGankDatas(String type, int page) {
         if (mCachedGankDatas != null && !mCacheIsDirty) {
             return Observable.from(mCachedGankDatas.values()).toList();
         } else if (mCachedGankDatas == null) {
             mCachedGankDatas = new LinkedHashMap<>();
         }
-        Observable<List<GankData>> remoteData = getAndSaveRemoteDatas();
+        Observable<List<GankData>> remoteData = getAndSaveRemoteDatas(getRequestCode());
         if (mCacheIsDirty) {
             return remoteData;
         } else {
-            Observable<List<GankData>> localCacheDatas = getAndCacheLocalDatas();
+            Observable<List<GankData>> localCacheDatas = getAndCacheLocalDatas(getRequestCode());
             return Observable.concat(localCacheDatas, remoteData)
                     .filter(new Func1<List<GankData>, Boolean>() {
                         @Override
@@ -77,9 +70,10 @@ public class GankDataRepository implements GankDataSource {
      * 获取本地缓存数据 todo:本地数据缓存没有实现
      *
      * @return
+     * @param type
      */
-    private Observable<List<GankData>> getAndCacheLocalDatas() {
-        return mRemoteDataSource.getGankDatas()
+    private Observable<List<GankData>> getAndCacheLocalDatas(String type) {
+        return mRemoteDataSource.getGankDatas(type, 1)
                 .flatMap(new Func1<List<GankData>, Observable<List<GankData>>>() {
                     @Override
                     public Observable<List<GankData>> call(List<GankData> gankData) {
@@ -95,9 +89,9 @@ public class GankDataRepository implements GankDataSource {
                 });
     }
 
-    private Observable<List<GankData>> getAndSaveRemoteDatas() {
+    private Observable<List<GankData>> getAndSaveRemoteDatas(String type) {
         return mRemoteDataSource
-                .getGankDatas()
+                .getGankDatas(type, 1)
                 .flatMap(new Func1<List<GankData>, Observable<List<GankData>>>() {
                     @Override
                     public Observable<List<GankData>> call(List<GankData> datas) {

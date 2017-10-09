@@ -1,16 +1,16 @@
 package com.zurich.gankmaterial.gankDatas.viewholder;
 
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseViewHolder;
 import com.zurich.gankmaterial.R;
 
 /**
  * Created by weixinfei on 2016/11/28.
  */
-public class AndroidDataViewHolder extends RecyclerView.ViewHolder {
+public class AndroidDataViewHolder extends BaseViewHolder {
     public TextView tvCreatTime;
     public TextView tvAuthor;
     public TextView tvTitle;

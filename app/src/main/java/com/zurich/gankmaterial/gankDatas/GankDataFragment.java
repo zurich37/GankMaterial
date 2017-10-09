@@ -7,12 +7,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.zurich.gankmaterial.R;
 import com.zurich.gankmaterial.base.BaseFragment;
 import com.zurich.gankmaterial.data.GankData;
+import com.zurich.gankmaterial.widget.CustomLoadMoreView;
 import com.zurich.gankmaterial.widget.HintView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -29,8 +30,7 @@ public class GankDataFragment extends BaseFragment implements GankDatasContract.
     @BindView(R.id.hint_android_list_hint)
     HintView hintView;
     private GankDatasContract.Presenter mPresenter;
-    private List<GankData> mList;
-    private GankDataAdapter mAdapter;
+    private GankDataAdapter gankDataAdapter;
 
     public static Fragment newInstance(int i) {
 
@@ -45,11 +45,21 @@ public class GankDataFragment extends BaseFragment implements GankDatasContract.
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
         ButterKnife.bind(this, view);
-        mAdapter = new GankDataAdapter(new ArrayList<GankData>(0));
+        gankDataAdapter = new GankDataAdapter();
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(mAdapter);
+
+        gankDataAdapter.setLoadMoreView(new CustomLoadMoreView());
+        gankDataAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+            @Override
+            public void onLoadMoreRequested() {
+                mPresenter.loadDatas(false);
+            }
+        }, recyclerView);
+        recyclerView.setAdapter(gankDataAdapter);
+
+        gankDataAdapter.disableLoadMoreIfNotFullPage();
     }
 
     @Override
@@ -77,7 +87,20 @@ public class GankDataFragment extends BaseFragment implements GankDatasContract.
     public void showDatas(List<GankData> datas) {
         if (!datas.isEmpty()) {
             hintView.hidden();
-            mAdapter.setData(datas);
+            gankDataAdapter.setNewData(datas);
+        }
+    }
+
+    @Override
+    public void showMoreDatas(List<GankData> datas) {
+        if (!datas.isEmpty()) {
+            hintView.hidden();
+            gankDataAdapter.addData(datas);
+            if (datas.size() == 20) {
+                gankDataAdapter.loadMoreComplete();
+            } else {
+                gankDataAdapter.loadMoreEnd();
+            }
         }
     }
 

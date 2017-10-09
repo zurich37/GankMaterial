@@ -8,10 +8,10 @@
         android:id="@+id/iv_gank_model_icon"
         android:layout_width="55dp"
         android:layout_height="55dp"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:layout_marginRight="@dimen/fab_margin"
-        android:layout_marginLeft="@dimen/list_top_margin"
+        android:layout_marginRight="@dimen/list_top_margin"
+        android:layout_marginLeft="@dimen/fab_margin"
         android:src="@mipmap/ic_launcher" />
 
     <TextView
@@ -20,11 +20,11 @@
         android:layout_height="wrap_content"
         android:gravity="left"
         android:layout_marginTop="@dimen/list_top_margin"
-        android:layout_toLeftOf="@id/iv_gank_model_icon"
+        android:layout_toRightOf="@id/iv_gank_model_icon"
         android:ellipsize="end"
         android:lines="2"
         android:maxLines="2"
-        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
         android:text="来得及付款时塑料馈说来得及付款时塑料袋放假了涉及到了反馈说"
         android:textSize="@dimen/text_title_normal" />
 
@@ -33,7 +33,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_gank_model_title"
         android:orientation="horizontal"
-        android:paddingLeft="16dp">
+        android:layout_toRightOf="@id/iv_gank_model_icon"
+        android:paddingRight="16dp">
 
         <TextView
             android:id="@+id/tv_gank_author"

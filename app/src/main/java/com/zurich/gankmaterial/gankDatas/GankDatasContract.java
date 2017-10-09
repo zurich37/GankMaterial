@@ -11,11 +11,13 @@ import java.util.List;
  * Created by weixinfei on 2016/11/28.
  */
 public interface GankDatasContract {
-    interface View extends BaseView<Presenter>{
+    interface View extends BaseView<Presenter> {
         void showDatas(List<GankData> datas);
+
+        void showMoreDatas(List<GankData> datas);
     }
 
-    interface Presenter extends BasePresenter{
+    interface Presenter extends BasePresenter {
         void loadDatas(boolean isForceRefresh);
 
         void openDetail(GankData data);
