@@ -11,6 +11,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.zurich.gankmaterial.R;
 import com.zurich.gankmaterial.base.BaseFragment;
 import com.zurich.gankmaterial.data.GankData;
+import com.zurich.gankmaterial.webPage.GankDataDetailActivity;
 import com.zurich.gankmaterial.widget.CustomLoadMoreView;
 import com.zurich.gankmaterial.widget.HintView;
 
@@ -60,6 +61,14 @@ public class GankDataFragment extends BaseFragment implements GankDatasContract.
         recyclerView.setAdapter(gankDataAdapter);
 
         gankDataAdapter.disableLoadMoreIfNotFullPage();
+
+        gankDataAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                GankData gankData = (GankData) adapter.getData().get(position);
+                GankDataDetailActivity.launchActivity(getActivity(), gankData);
+            }
+        });
     }
 
     @Override

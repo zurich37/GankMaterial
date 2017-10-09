@@ -1,4 +1,4 @@
-package com.zurich.gankmaterial.utils;
+package com.zurich.gankmaterial.util;
 
 import android.content.Context;
 import android.util.TypedValue;

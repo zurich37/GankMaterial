@@ -13,4 +13,5 @@ public interface GankConstans {
     String REQUEST_TYPE_REST_VIDEO = "休息视频";
     String REQUEST_TYPE_EXPAND_RES = "拓展资源";
     String REQUEST_TYPE_FOND_END = "前端";
+    String WEB_CACHE_DIR = "WebCache";
 }

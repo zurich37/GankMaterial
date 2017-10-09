@@ -1,11 +1,12 @@
 package com.zurich.gankmaterial.data;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by weixinfei on 2016/11/27.
  */
-public class GankData {
+public class GankData implements Serializable{
 
     /**
      * _id : 5836a7fc421aa91cb7afe7e0

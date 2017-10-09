@@ -3,12 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:foreground="?android:attr/selectableItemBackground"
     android:orientation="vertical">
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:drawable/list_selector_background">
+        android:layout_height="wrap_content">
 
         <com.zurich.gankmaterial.widget.GankImageView
             android:id="@+id/iv_gank_model_icon"

@@ -7,7 +7,7 @@ import android.util.AttributeSet;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
-import com.zurich.gankmaterial.utils.DimenUtils;
+import com.zurich.gankmaterial.util.DimenUtils;
 
 import jp.wasabeef.glide.transformations.BlurTransformation;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
