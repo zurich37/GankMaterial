@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -45,6 +47,26 @@ public class GankDataDetailActivity extends BaseActivity {
         initView();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_detail, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_share) {
+            Intent intent = new Intent();
+            intent.setAction(Intent.ACTION_SEND);
+            intent.setType("text/plain");//设置分享内容的类型
+            intent.putExtra(Intent.EXTRA_SUBJECT, gankData.desc);//添加分享内容标题
+            intent.putExtra(Intent.EXTRA_TEXT, gankData.url);//添加分享内容
+            intent = Intent.createChooser(intent, "分享到...");
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     private boolean handleIntent(Intent intent) {
         gankData = (GankData) intent.getSerializableExtra(EXTRA_GANK_DATA);
         return gankData != null;
@@ -59,6 +81,7 @@ public class GankDataDetailActivity extends BaseActivity {
                 onBackPressed();
             }
         });
+        setSupportActionBar(toolbar);
     }
 
     private void initView() {

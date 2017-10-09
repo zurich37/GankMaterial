@@ -9,4 +9,5 @@
     <string name="tab_android">Android</string>
     <string name="tab_iOS">iOS</string>
     <string name="tab_fuli">福利</string>
+    <string name="action_share">分享</string>
 </resources>
