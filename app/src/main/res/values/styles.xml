@@ -26,4 +26,9 @@
         <item name="android:layout_height">2dp</item>
         <item name="android:background">@drawable/shape_list_divider_match</item>
     </style>
+
+    <style name="HomeTabTextStyle" parent="TextAppearance.Design.Tab">
+        <!--Tab字体是否为大写-->
+        <item name="textAllCaps">false</item>
+    </style>
 </resources>
