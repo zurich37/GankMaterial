@@ -45,7 +45,7 @@ public class GankDataFragment extends BaseFragment implements GankDatasContract.
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
         ButterKnife.bind(this, view);
-        gankDataAdapter = new GankDataAdapter();
+        gankDataAdapter = new GankDataAdapter(getContext());
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);

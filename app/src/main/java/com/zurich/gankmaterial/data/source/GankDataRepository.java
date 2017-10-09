@@ -38,6 +38,8 @@ public abstract class GankDataRepository implements GankDataSource {
     @VisibleForTesting
     private boolean mCacheIsDirty = false;
 
+    private int lastRequestPage;
+
     protected abstract String getRequestCode();
 
     GankDataRepository(@NonNull GankDataSource dataSource) {
@@ -46,16 +48,17 @@ public abstract class GankDataRepository implements GankDataSource {
 
     @Override
     public Observable<List<GankData>> getGankDatas(String type, int page) {
-        if (mCachedGankDatas != null && !mCacheIsDirty) {
+        if (mCachedGankDatas != null && !mCacheIsDirty && lastRequestPage == page) {
             return Observable.from(mCachedGankDatas.values()).toList();
         } else if (mCachedGankDatas == null) {
             mCachedGankDatas = new LinkedHashMap<>();
         }
-        Observable<List<GankData>> remoteData = getAndSaveRemoteDatas(getRequestCode());
+        lastRequestPage = page;
+        Observable<List<GankData>> remoteData = getAndSaveRemoteDatas(getRequestCode(), page);
         if (mCacheIsDirty) {
             return remoteData;
         } else {
-            Observable<List<GankData>> localCacheDatas = getAndCacheLocalDatas(getRequestCode());
+            Observable<List<GankData>> localCacheDatas = getAndCacheLocalDatas(getRequestCode(), page);
             return Observable.concat(localCacheDatas, remoteData)
                     .filter(new Func1<List<GankData>, Boolean>() {
                         @Override
@@ -71,9 +74,10 @@ public abstract class GankDataRepository implements GankDataSource {
      *
      * @return
      * @param type
+     * @param page
      */
-    private Observable<List<GankData>> getAndCacheLocalDatas(String type) {
-        return mRemoteDataSource.getGankDatas(type, 1)
+    private Observable<List<GankData>> getAndCacheLocalDatas(String type, int page) {
+        return mRemoteDataSource.getGankDatas(type, page)
                 .flatMap(new Func1<List<GankData>, Observable<List<GankData>>>() {
                     @Override
                     public Observable<List<GankData>> call(List<GankData> gankData) {
@@ -89,9 +93,9 @@ public abstract class GankDataRepository implements GankDataSource {
                 });
     }
 
-    private Observable<List<GankData>> getAndSaveRemoteDatas(String type) {
+    private Observable<List<GankData>> getAndSaveRemoteDatas(String type, int page) {
         return mRemoteDataSource
-                .getGankDatas(type, 1)
+                .getGankDatas(type, page)
                 .flatMap(new Func1<List<GankData>, Observable<List<GankData>>>() {
                     @Override
                     public Observable<List<GankData>> call(List<GankData> datas) {

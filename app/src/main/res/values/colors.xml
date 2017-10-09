@@ -6,10 +6,13 @@
     <color name="white">#ffffff</color>
 
     <!--87%-->
-    <color name="text_normal_title">#DE000000</color>
+    <color name="text_normal_title">#FF000000</color>
     <!--54%-->
-    <color name="text_normal_subtitle">#8A000000</color>
+    <color name="text_normal_subtitle">#DE4A4A4A</color>
     <!--38%-->
     <color name="text_normal_grey">#61000000</color>
-    <color name="list_divider">#f1f1f1</color>
+    <color name="list_divider">#3D4A4A4A</color>
+    
+    <color name="transparent_bg">#6B000000</color>
+    <color name="text_gray">#FFFFFFFF</color>
 </resources>
