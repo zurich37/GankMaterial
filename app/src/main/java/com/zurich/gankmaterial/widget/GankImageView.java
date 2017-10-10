@@ -44,7 +44,6 @@ public class GankImageView extends android.support.v7.widget.AppCompatImageView 
     public void displayFromUrlWithoutCorner(String url) {
         Glide.with(getContext())
                 .load(url)
-                .bitmapTransform(new CenterCrop(getContext()))
                 .into(GankImageView.this);
     }
 

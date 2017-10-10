@@ -43,23 +43,29 @@ public abstract class BaseFragment extends SupportFragment {
     }
 
     protected void initToolbarNav(Toolbar toolbar, boolean isHome) {
-        toolbar.setNavigationIcon(R.drawable.ic_menu_white);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mOpenDraweListener != null) {
-                    mOpenDraweListener.onOpenDrawer();
-                }
-            }
-        });
-
-        if(!isHome) {
+        if (!isHome) {
             initToolbarMenu(toolbar);
+        } else {
+            toolbar.setNavigationIcon(R.drawable.ic_menu_white);
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mOpenDraweListener != null) {
+                        mOpenDraweListener.onOpenDrawer();
+                    }
+                }
+            });
         }
     }
 
     protected void initToolbarMenu(Toolbar toolbar) {
-
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressedSupport();
+            }
+        });
     }
 
     @Override

@@ -7,15 +7,17 @@ import android.support.v4.app.FragmentPagerAdapter;
 import com.zurich.gankmaterial.data.source.GankAndroidDataRepository;
 import com.zurich.gankmaterial.data.source.GankIOSDataRepository;
 import com.zurich.gankmaterial.data.source.GankWebDataRepository;
+import com.zurich.gankmaterial.data.source.GankWelfareDataRepository;
 import com.zurich.gankmaterial.data.source.remote.GankRemoteDataSource;
 import com.zurich.gankmaterial.gankDatas.GankDataFragment;
 import com.zurich.gankmaterial.gankDatas.GankDatasPresenter;
+import com.zurich.gankmaterial.gankDatas.WelfareDataFragment;
 
 /**
  * tab adapter
  */
 public class HomeTabFragmentAdapter extends FragmentPagerAdapter {
-    private String[] mTitles = new String[]{"Android", "iOS", "前端"/*"休息视频", "拓展资源", "福利"*/};
+    private String[] mTitles = new String[]{"Android", "iOS", "前端", "福利"/*"休息视频", "拓展资源", "福利"*/};
     private GankDataFragment gankDataFragment;
 
     public HomeTabFragmentAdapter(FragmentManager fm) {
@@ -37,6 +39,10 @@ public class HomeTabFragmentAdapter extends FragmentPagerAdapter {
                 GankDataFragment gankWebDataFragment = (GankDataFragment) GankDataFragment.newInstance(0);
                 new GankDatasPresenter(GankWebDataRepository.getInstance(GankRemoteDataSource.getInstance()), gankWebDataFragment);
                 return gankWebDataFragment;
+            case 3:
+                WelfareDataFragment gankWelfareDataFragment = (WelfareDataFragment) WelfareDataFragment.newInstance(0);
+                new GankDatasPresenter(GankWelfareDataRepository.getInstance(GankRemoteDataSource.getInstance()), gankWelfareDataFragment);
+                return gankWelfareDataFragment;
         }
         return null;
     }
