@@ -3,14 +3,18 @@ package com.zurich.gankmaterial.gankDatas;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.Space;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.zurich.gankmaterial.R;
 import com.zurich.gankmaterial.base.BaseFragment;
 import com.zurich.gankmaterial.data.GankData;
+import com.zurich.gankmaterial.util.DimenUtils;
 import com.zurich.gankmaterial.webPage.GankDataDetailActivity;
 import com.zurich.gankmaterial.widget.CustomLoadMoreView;
 import com.zurich.gankmaterial.widget.HintView;
@@ -24,17 +28,18 @@ import butterknife.ButterKnife;
  * 各Gank.io数据页面
  * Created by weixinfei on 2016/11/27.
  */
-public class GankDataFragment extends BaseFragment implements GankDatasContract.View {
+public class GankDataFragment extends BaseFragment implements GankDatasContract.View, SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R.id.rv_android_list)
     RecyclerView recyclerView;
+    @BindView(R.id.swipe_main_view)
+    SwipeRefreshLayout swipeRefreshLayout;
     @BindView(R.id.hint_android_list_hint)
     HintView hintView;
     private GankDatasContract.Presenter mPresenter;
     private GankDataAdapter gankDataAdapter;
 
     public static Fragment newInstance(int i) {
-
         return new GankDataFragment();
     }
 
@@ -60,6 +65,9 @@ public class GankDataFragment extends BaseFragment implements GankDatasContract.
         }, recyclerView);
         recyclerView.setAdapter(gankDataAdapter);
 
+        Space space = new Space(getContext());
+        space.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, DimenUtils.dp2px(getContext(), 15)));
+        gankDataAdapter.addHeaderView(space);
         gankDataAdapter.disableLoadMoreIfNotFullPage();
 
         gankDataAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
@@ -69,6 +77,9 @@ public class GankDataFragment extends BaseFragment implements GankDatasContract.
                 GankDataDetailActivity.launchActivity(getActivity(), gankData);
             }
         });
+
+        swipeRefreshLayout.setColorSchemeResources(R.color.g_green, R.color.g_red, R.color.g_yellow, R.color.g_blue);
+        swipeRefreshLayout.setOnRefreshListener(this);
     }
 
     @Override
@@ -96,6 +107,7 @@ public class GankDataFragment extends BaseFragment implements GankDatasContract.
     public void showDatas(List<GankData> datas) {
         if (!datas.isEmpty()) {
             hintView.hidden();
+            swipeRefreshLayout.setRefreshing(false);
             gankDataAdapter.setNewData(datas);
         }
     }
@@ -120,7 +132,8 @@ public class GankDataFragment extends BaseFragment implements GankDatasContract.
 
     @Override
     public void showLoading(String msg) {
-        hintView.loading().show();
+        if (!swipeRefreshLayout.isRefreshing())
+            hintView.loading().show();
     }
 
     @Override
@@ -128,6 +141,7 @@ public class GankDataFragment extends BaseFragment implements GankDatasContract.
         if (hintView.isShowing()) {
             hintView.hidden();
         }
+        swipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
@@ -143,5 +157,10 @@ public class GankDataFragment extends BaseFragment implements GankDatasContract.
     @Override
     public void showNetError(View.OnClickListener onClickListener) {
 
+    }
+
+    @Override
+    public void onRefresh() {
+        mPresenter.loadDatas(true);
     }
 }

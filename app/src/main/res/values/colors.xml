@@ -15,4 +15,9 @@
     
     <color name="transparent_bg">#6B000000</color>
     <color name="text_gray">#FFFFFFFF</color>
+
+    <color name="g_green">#3cba54</color>
+    <color name="g_yellow">#f4c20d</color>
+    <color name="g_red">#db3236</color>
+    <color name="g_blue">#4885ed</color>
 </resources>

@@ -4,6 +4,7 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -25,10 +26,12 @@ import butterknife.ButterKnife;
  * 各Gank.io数据页面
  * Created by weixinfei on 2016/11/27.
  */
-public class WelfareDataFragment extends BaseFragment implements GankDatasContract.View {
+public class WelfareDataFragment extends BaseFragment implements GankDatasContract.View, SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R.id.rv_android_list)
     RecyclerView recyclerView;
+    @BindView(R.id.swipe_main_view)
+    SwipeRefreshLayout swipeRefreshLayout;
     @BindView(R.id.hint_android_list_hint)
     HintView hintView;
     private GankDatasContract.Presenter mPresenter;
@@ -70,6 +73,9 @@ public class WelfareDataFragment extends BaseFragment implements GankDatasContra
                 WelfareDetailActivity.launchActivity(getActivity(), gankData);
             }
         });
+
+        swipeRefreshLayout.setColorSchemeResources(R.color.g_green, R.color.g_red, R.color.g_yellow, R.color.g_blue);
+        swipeRefreshLayout.setOnRefreshListener(this);
     }
 
     @Override
@@ -94,6 +100,7 @@ public class WelfareDataFragment extends BaseFragment implements GankDatasContra
     public void showDatas(List<GankData> datas) {
         if (!datas.isEmpty()) {
             hintView.hidden();
+            swipeRefreshLayout.setRefreshing(false);
             gankDataAdapter.setNewData(datas);
         }
     }
@@ -118,13 +125,15 @@ public class WelfareDataFragment extends BaseFragment implements GankDatasContra
 
     @Override
     public void showLoading(String msg) {
-        hintView.loading().show();
+        if (!swipeRefreshLayout.isRefreshing())
+            hintView.loading().show();
     }
 
     @Override
     public void hideLoading() {
         if (hintView.isShowing()) {
             hintView.hidden();
+            swipeRefreshLayout.setRefreshing(false);
         }
     }
 
@@ -143,11 +152,16 @@ public class WelfareDataFragment extends BaseFragment implements GankDatasContra
 
     }
 
+    @Override
+    public void onRefresh() {
+        mPresenter.loadDatas(true);
+    }
+
     public class SpacesItemDecoration extends RecyclerView.ItemDecoration {
 
         private int space;
 
-        public SpacesItemDecoration(int space) {
+        SpacesItemDecoration(int space) {
             this.space = space;
         }
 
