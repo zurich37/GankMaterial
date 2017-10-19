@@ -7,11 +7,8 @@ import com.zurich.gankmaterial.retrofit.http.HttpResult;
 import com.zurich.gankmaterial.retrofit.http.OKHttpFactory;
 import com.zurich.gankmaterial.util.schedulers.SchedulerProvider;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import okhttp3.ResponseBody;
-import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -27,10 +24,8 @@ public class HttpMethods {
     public static final String TAG = "HttpMethods";
 
     private GankService gankService;
-    private static List<Call<ResponseBody>> downloadCalls;
 
     private HttpMethods() {
-        downloadCalls = new ArrayList<>();
         Retrofit retrofit = new Retrofit.Builder()
                 .client(OKHttpFactory.INSTANCE.getOkHttpClient())
                 .addConverterFactory(GsonConverterFactory.create())
