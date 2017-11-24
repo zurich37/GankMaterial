@@ -3,9 +3,11 @@ package com.zurich.gankmaterial.gankDatas;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -31,7 +33,9 @@ import uk.co.senab.photoview.PhotoViewAttacher;
 
 /**
  * 福利详情页
- * Created by weixinfei on 16/5/30.
+ *
+ * @author weixinfei
+ * @date 16/5/30
  */
 public class WelfareDetailActivity extends BaseActivity {
 
@@ -112,20 +116,25 @@ public class WelfareDetailActivity extends BaseActivity {
                 String[] strings = url.substring(url.lastIndexOf("/") + 1).split("\\.");
                 String fileName = strings[0] + "." + strings[1];
 
-                Intent intent = new Intent();
-                intent.setAction(Intent.ACTION_SEND);
-                intent.setType("image/*");
-                intent.putExtra(Intent.EXTRA_TEXT, "share content");
-                if (!new File(GankConstans.WELFARE_DIR + fileName).exists()) {
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                File file = new File(GankConstans.WELFARE_DIR + fileName);
+                if (!file.exists()) {
                     ImageUtil.saveImage(this, url, bitmap, ivMeizhi, "save", false);
                 }
-                Uri uri = Uri.fromFile(new File(GankConstans.WELFARE_DIR + fileName));
+                Uri uri;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    uri = FileProvider.getUriForFile(this, getPackageName()+".fileprovider", file);
+                } else {
+                    uri = Uri.fromFile(file);
+                }
+                intent.setType("image/*");
                 intent.putExtra(Intent.EXTRA_STREAM, uri);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(Intent.createChooser(intent, "请选择"));
+                startActivity(intent);
                 break;
             case R.id.action_save:
                 ImageUtil.saveImage(this, url, bitmap, ivMeizhi, "save", true);
+                break;
+            default:
                 break;
         }
         return super.onOptionsItemSelected(item);
