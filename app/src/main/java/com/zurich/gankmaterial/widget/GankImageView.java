@@ -3,6 +3,7 @@ package com.zurich.gankmaterial.widget;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 
 import com.bumptech.glide.Glide;
@@ -12,10 +13,11 @@ import com.zurich.gankmaterial.util.DimenUtils;
 import jp.wasabeef.glide.transformations.BlurTransformation;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
-public class GankImageView extends android.support.v7.widget.AppCompatImageView {
-
-    public static final int IMAGE_TYPE_VIDEO_LIST = 0x01;
-    public static final int IMAGE_TYPE_VIDEO_LAST_PLAY = 0x02;
+/**
+ * 通用的ImageView
+ * @author weixinfei
+ */
+public class GankImageView extends AppCompatImageView {
 
     public GankImageView(Context context) {
         super(context);

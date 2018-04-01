@@ -26,7 +26,9 @@ import butterknife.ButterKnife;
 
 /**
  * 各Gank.io数据页面
- * Created by weixinfei on 2016/11/27.
+ *
+ * @author weixinfei
+ * @date 2016/11/27
  */
 public class GankDataFragment extends BaseFragment implements GankDatasContract.View, SwipeRefreshLayout.OnRefreshListener {
 
@@ -39,7 +41,7 @@ public class GankDataFragment extends BaseFragment implements GankDatasContract.
     private GankDatasContract.Presenter mPresenter;
     private GankDataAdapter gankDataAdapter;
 
-    public static Fragment newInstance(int i) {
+    public static Fragment newInstance() {
         return new GankDataFragment();
     }
 
@@ -51,6 +53,7 @@ public class GankDataFragment extends BaseFragment implements GankDatasContract.
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
         ButterKnife.bind(this, view);
+        mPresenter.subscribe();
         gankDataAdapter = new GankDataAdapter(getContext());
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -92,15 +95,11 @@ public class GankDataFragment extends BaseFragment implements GankDatasContract.
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        mPresenter.subscribe();
-    }
-
-    @Override
     public void onPause() {
         super.onPause();
-        mPresenter.unsubscribe();
+        if (mPresenter != null) {
+            mPresenter.unsubscribe();
+        }
     }
 
     @Override
@@ -132,8 +131,9 @@ public class GankDataFragment extends BaseFragment implements GankDatasContract.
 
     @Override
     public void showLoading(String msg) {
-        if (!swipeRefreshLayout.isRefreshing())
+        if (!swipeRefreshLayout.isRefreshing()) {
             hintView.loading().show();
+        }
     }
 
     @Override

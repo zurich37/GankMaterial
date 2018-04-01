@@ -50,6 +50,9 @@ public class WelfareDataFragment extends BaseFragment implements GankDatasContra
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
         ButterKnife.bind(this, view);
+
+        mPresenter.subscribe();
+
         gankDataAdapter = new WelfareDataAdapter();
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
 
@@ -82,12 +85,6 @@ public class WelfareDataFragment extends BaseFragment implements GankDatasContra
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle args = getArguments();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mPresenter.subscribe();
     }
 
     @Override
