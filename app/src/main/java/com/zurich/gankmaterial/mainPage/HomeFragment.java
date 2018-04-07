@@ -58,6 +58,7 @@ public class HomeFragment extends BaseFragment {
         tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_fuli));*/
 
         viewPager.setAdapter(new HomeTabFragmentAdapter(getChildFragmentManager()));
+        viewPager.setOffscreenPageLimit(4);
         tabLayout.setupWithViewPager(viewPager);
     }
 

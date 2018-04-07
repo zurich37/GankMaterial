@@ -96,6 +96,8 @@ public class GankDataDetailActivity extends BaseActivity {
     protected void onDestroy() {
         mWebView.removeAllViews();
         mWebView.destroy();
+        mWebView = null;
+        nestScrollGankDetail.removeAllViews();
         super.onDestroy();
     }
 

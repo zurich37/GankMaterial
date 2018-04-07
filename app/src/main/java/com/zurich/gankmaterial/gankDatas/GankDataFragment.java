@@ -53,7 +53,6 @@ public class GankDataFragment extends BaseFragment implements GankDatasContract.
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
         ButterKnife.bind(this, view);
-        mPresenter.subscribe();
         gankDataAdapter = new GankDataAdapter(getContext());
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -83,6 +82,12 @@ public class GankDataFragment extends BaseFragment implements GankDatasContract.
 
         swipeRefreshLayout.setColorSchemeResources(R.color.g_green, R.color.g_red, R.color.g_yellow, R.color.g_blue);
         swipeRefreshLayout.setOnRefreshListener(this);
+    }
+
+    @Override
+    public void onLazyInitView(@Nullable Bundle savedInstanceState) {
+        super.onLazyInitView(savedInstanceState);
+        mPresenter.subscribe();
     }
 
     @Override
