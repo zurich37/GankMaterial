@@ -24,6 +24,11 @@ public class SplashActivity extends BaseActivity {
     }
 
     @Override
+    protected boolean parseIntent() {
+        return true;
+    }
+
+    @Override
     protected void setUpContentView() {
         setContentView(R.layout.activity_splash, 0, BaseActivity.MODE_NONE);
     }

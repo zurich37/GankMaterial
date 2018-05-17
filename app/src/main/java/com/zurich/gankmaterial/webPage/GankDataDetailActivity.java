@@ -32,14 +32,10 @@ public class GankDataDetailActivity extends BaseActivity {
     @Override
     protected void setUpContentView() {
         setContentView(R.layout.activity_gank_detail, 0, BaseActivity.MODE_NONE);
-        if (!handleIntent(getIntent())) {
-            finish();
-        }
     }
 
     @Override
     protected void setUpView() {
-        initToolbar();
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         mWebView = new ProgressWebView(getApplicationContext());
         mWebView.setLayoutParams(params);
@@ -51,12 +47,8 @@ public class GankDataDetailActivity extends BaseActivity {
         mWebView.loadUrl(gankData.url);
     }
 
-    private boolean handleIntent(Intent intent) {
-        gankData = (GankData) intent.getSerializableExtra(EXTRA_GANK_DATA);
-        return gankData != null;
-    }
-
-    private void initToolbar() {
+    @Override
+    protected void setUpToolbar(int titleResId, int menuId, int mode) {
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
         toolbar.setTitle(gankData.desc);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -67,6 +59,12 @@ public class GankDataDetailActivity extends BaseActivity {
         });
         setSupportActionBar(toolbar);
         setUpMenu(R.menu.menu_detail);
+    }
+
+    @Override
+    protected boolean parseIntent() {
+        gankData = (GankData) getIntent().getSerializableExtra(EXTRA_GANK_DATA);
+        return gankData != null;
     }
 
     @Override

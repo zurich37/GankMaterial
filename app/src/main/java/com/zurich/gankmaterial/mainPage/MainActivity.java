@@ -29,6 +29,11 @@ public class MainActivity extends BaseActivity
     DrawerLayout drawer;
 
     @Override
+    protected boolean parseIntent() {
+        return true;
+    }
+
+    @Override
     protected void setUpContentView() {
         setContentView(R.layout.activity_main, 0, BaseActivity.MODE_NONE);
     }

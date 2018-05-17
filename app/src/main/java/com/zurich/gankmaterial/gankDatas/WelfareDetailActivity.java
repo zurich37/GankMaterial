@@ -47,17 +47,26 @@ public class WelfareDetailActivity extends BaseActivity {
     private Bitmap bitmap;
 
     @Override
+    protected boolean parseIntent() {
+        Intent intent = getIntent();
+        GankData gankData = (GankData) intent.getSerializableExtra(EXTRA_WELFARE_DATA);
+        if (gankData != null) {
+            desc = gankData.desc;
+            url = gankData.url;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
     protected void setUpContentView() {
         setContentView(R.layout.activity_welfare_detail);
     }
 
     @Override
     protected void setUpView() {
-        Intent intent = getIntent();
-        GankData gankData = (GankData) intent.getSerializableExtra(EXTRA_WELFARE_DATA);
-        desc = gankData.desc;
-        url = gankData.url;
-        initToolbar();
+
     }
 
     @Override
@@ -80,7 +89,8 @@ public class WelfareDetailActivity extends BaseActivity {
         }
     }
 
-    private void initToolbar() {
+    @Override
+    protected void setUpToolbar(int titleResId, int menuId, int mode) {
         mToolbar.setTitle(desc);
         mToolbar.setTitleTextColor(getResources().getColor(R.color.white));
         setSupportActionBar(mToolbar);

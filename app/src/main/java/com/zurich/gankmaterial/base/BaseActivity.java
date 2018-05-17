@@ -120,11 +120,14 @@ public abstract class BaseActivity extends SupportActivity implements LifecycleP
 
     public void setContentView(int layoutResID, int titleResId, int menuId, int mode) {
         super.setContentView(layoutResID);
+        if (!parseIntent()) {
+            finish();
+        }
         ButterKnife.bind(this);
         setUpToolbar(titleResId, menuId, mode);
     }
 
-    private void setUpToolbar(int titleResId, int menuId, int mode) {
+    protected void setUpToolbar(int titleResId, int menuId, int mode) {
         if (mode != MODE_NONE) {
             appbar = (AppBarLayout) findViewById(R.id.appbar);
             toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -146,7 +149,7 @@ public abstract class BaseActivity extends SupportActivity implements LifecycleP
         }
     }
 
-    private void setUpTitle(int titleResId) {
+    protected void setUpTitle(int titleResId) {
         if (titleResId > 0 && toolbar_title != null) {
             toolbar_title.setText(titleResId);
         }
@@ -162,6 +165,7 @@ public abstract class BaseActivity extends SupportActivity implements LifecycleP
         }
     }
 
+    protected abstract boolean parseIntent();
     protected abstract void setUpContentView();
 
     protected abstract void setUpView();
