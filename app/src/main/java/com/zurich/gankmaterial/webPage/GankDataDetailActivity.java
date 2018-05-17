@@ -2,11 +2,8 @@ package com.zurich.gankmaterial.webPage;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +15,6 @@ import com.zurich.gankmaterial.data.GankData;
 import com.zurich.gankmaterial.widget.ProgressWebView;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by weixinfei on 2017/10/9.
@@ -34,37 +30,25 @@ public class GankDataDetailActivity extends BaseActivity {
     private ProgressWebView mWebView;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_gank_detail);
-        ButterKnife.bind(this);
-
+    protected void setUpContentView() {
+        setContentView(R.layout.activity_gank_detail, 0, BaseActivity.MODE_NONE);
         if (!handleIntent(getIntent())) {
-            return;
+            finish();
         }
+    }
 
+    @Override
+    protected void setUpView() {
         initToolbar();
-        initView();
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        mWebView = new ProgressWebView(getApplicationContext());
+        mWebView.setLayoutParams(params);
+        nestScrollGankDetail.addView(mWebView);
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_detail, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_share) {
-            Intent intent = new Intent();
-            intent.setAction(Intent.ACTION_SEND);
-            intent.setType("text/plain");//设置分享内容的类型
-            intent.putExtra(Intent.EXTRA_SUBJECT, gankData.desc);//添加分享内容标题
-            intent.putExtra(Intent.EXTRA_TEXT, gankData.url);//添加分享内容
-            intent = Intent.createChooser(intent, "分享到...");
-            startActivity(intent);
-        }
-        return super.onOptionsItemSelected(item);
+    protected void setUpData() {
+        mWebView.loadUrl(gankData.url);
     }
 
     private boolean handleIntent(Intent intent) {
@@ -82,14 +66,7 @@ public class GankDataDetailActivity extends BaseActivity {
             }
         });
         setSupportActionBar(toolbar);
-    }
-
-    private void initView() {
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        mWebView = new ProgressWebView(getApplicationContext());
-        mWebView.setLayoutParams(params);
-        nestScrollGankDetail.addView(mWebView);
-        mWebView.loadUrl(gankData.url);
+        setUpMenu(R.menu.menu_detail);
     }
 
     @Override
@@ -99,6 +76,22 @@ public class GankDataDetailActivity extends BaseActivity {
         mWebView = null;
         nestScrollGankDetail.removeAllViews();
         super.onDestroy();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_share) {
+            Intent intent = new Intent();
+            intent.setAction(Intent.ACTION_SEND);
+            intent.setType("text/plain");
+            intent.putExtra(Intent.EXTRA_SUBJECT, gankData.desc);
+            intent.putExtra(Intent.EXTRA_TEXT, gankData.url);
+            intent = Intent.createChooser(intent, "分享到...");
+            startActivity(intent);
+        } else if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public static void launchActivity(Activity activity, GankData gankData) {

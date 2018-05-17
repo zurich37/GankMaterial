@@ -20,4 +20,6 @@
     <color name="g_yellow">#f4c20d</color>
     <color name="g_red">#db3236</color>
     <color name="g_blue">#4885ed</color>
+
+    <color name="grey">#d2d2d2</color>
 </resources>

@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.ActionBar;
@@ -28,7 +26,6 @@ import com.zurich.gankmaterial.util.ImageUtil;
 import java.io.File;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import uk.co.senab.photoview.PhotoViewAttacher;
 
 /**
@@ -40,7 +37,7 @@ import uk.co.senab.photoview.PhotoViewAttacher;
 public class WelfareDetailActivity extends BaseActivity {
 
     public static final String EXTRA_WELFARE_DATA = "EXTRA_WELFARE_DATA";
-    @BindView(R.id.tool_bar_fuli_detail)
+    @BindView(R.id.toolbar)
     Toolbar mToolbar;
     @BindView(R.id.ivMeizhi)
     ImageView ivMeizhi;
@@ -50,24 +47,21 @@ public class WelfareDetailActivity extends BaseActivity {
     private Bitmap bitmap;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void setUpContentView() {
         setContentView(R.layout.activity_welfare_detail);
-        ButterKnife.bind(this);
-
-        initView();
-        initToolbar();
-        initData();
     }
 
-    private void initView() {
+    @Override
+    protected void setUpView() {
         Intent intent = getIntent();
         GankData gankData = (GankData) intent.getSerializableExtra(EXTRA_WELFARE_DATA);
         desc = gankData.desc;
         url = gankData.url;
+        initToolbar();
     }
 
-    private void initData() {
+    @Override
+    protected void setUpData() {
         if (!TextUtils.isEmpty(url)) {
             attacher = new PhotoViewAttacher(ivMeizhi);
             Glide.with(this)

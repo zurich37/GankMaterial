@@ -1,22 +1,22 @@
 package com.zurich.gankmaterial.mainPage;
 
-import android.os.Bundle;
+import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 
+import com.zurich.gankmaterial.GankConstans;
 import com.zurich.gankmaterial.R;
 import com.zurich.gankmaterial.base.BaseActivity;
 import com.zurich.gankmaterial.base.BaseFragment;
+import com.zurich.gankmaterial.splash.SplashActivity;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener, BaseFragment.OnFragmentOpenDrawerListener {
@@ -29,20 +29,39 @@ public class MainActivity extends BaseActivity
     DrawerLayout drawer;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
-
-        if (savedInstanceState == null) {
-            loadRootFragment(R.id.fl_container, HomeFragment.newInstance());
-        }
-
-        initView();
+    protected void setUpContentView() {
+        setContentView(R.layout.activity_main, 0, BaseActivity.MODE_NONE);
     }
 
-    private void initView() {
+    @Override
+    protected void setUpView() {
+        loadRootFragment(R.id.fl_container, HomeFragment.newInstance());
         navigationView.setNavigationItemSelectedListener(this);
+        setUpMenu(R.menu.main);
+    }
+
+    @Override
+    protected void setUpData() {
+
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        int action = intent.getIntExtra(GankConstans.KEY_HOME_ACTION, GankConstans.ACTION_BACK_TO_HOME);
+        switch (action) {
+            case GankConstans.ACTION_KICK_OUT:
+                protectApp();
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Override
+    protected void protectApp() {
+        startActivity(new Intent(this, SplashActivity.class));
+        finish();
     }
 
     @Override
@@ -66,13 +85,6 @@ public class MainActivity extends BaseActivity
         } else {
             super.onBackPressedSupport();
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
     }
 
     @Override

@@ -17,6 +17,8 @@ public class GankApplication extends Application {
         super.onCreate();
         instance = this;
 
+        AppStatusTracker.init(this);
+
         if (LeakCanary.isInAnalyzerProcess(this)) {//1
             // This process is dedicated to LeakCanary for heap analysis.
             // You should not init your app in this process.
