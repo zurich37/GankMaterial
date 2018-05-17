@@ -1,6 +1,7 @@
 package com.zurich.gankmaterial.mainPage;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -27,6 +28,14 @@ public class MainActivity extends BaseActivity
     NavigationView navigationView;
     @BindView(R.id.drawer_layout)
     DrawerLayout drawer;
+    private Bundle savedInstanceState;
+    private HomeFragment homeFragment;
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        this.savedInstanceState = savedInstanceState;
+    }
 
     @Override
     protected boolean parseIntent() {
@@ -40,7 +49,12 @@ public class MainActivity extends BaseActivity
 
     @Override
     protected void setUpView() {
-        loadRootFragment(R.id.fl_container, HomeFragment.newInstance());
+        if (savedInstanceState == null) {
+            homeFragment = HomeFragment.newInstance();
+            loadRootFragment(R.id.fl_container, homeFragment);
+        } else {
+            homeFragment = findFragment(HomeFragment.class);
+        }
         navigationView.setNavigationItemSelectedListener(this);
         setUpMenu(R.menu.main);
     }

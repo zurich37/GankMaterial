@@ -13,7 +13,6 @@ import com.zurich.gankmaterial.base.BaseFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import me.yokeyword.fragmentation.SupportFragment;
 
 /**
  * 主页面Fragment
@@ -30,7 +29,7 @@ public class HomeFragment extends BaseFragment {
     @BindView(R.id.fab_main)
     FloatingActionButton fabMain;
 
-    public static SupportFragment newInstance() {
+    public static HomeFragment newInstance() {
         return new HomeFragment();
     }
 
