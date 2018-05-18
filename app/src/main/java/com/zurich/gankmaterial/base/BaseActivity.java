@@ -127,6 +127,9 @@ public abstract class BaseActivity extends SupportActivity implements LifecycleP
         setUpToolbar(titleResId, menuId, mode);
     }
 
+    /**
+     * 设置Toolbar
+     */
     protected void setUpToolbar(int titleResId, int menuId, int mode) {
         if (mode != MODE_NONE) {
             appbar = (AppBarLayout) findViewById(R.id.appbar);
@@ -149,12 +152,20 @@ public abstract class BaseActivity extends SupportActivity implements LifecycleP
         }
     }
 
+    /**
+     * 设置标题
+     * @param titleResId
+     */
     protected void setUpTitle(int titleResId) {
         if (titleResId > 0 && toolbar_title != null) {
             toolbar_title.setText(titleResId);
         }
     }
 
+    /**
+     * 设置菜单
+     * @param menuId
+     */
     protected void setUpMenu(int menuId) {
         if (toolbar != null){
             toolbar.getMenu().clear();
@@ -165,11 +176,26 @@ public abstract class BaseActivity extends SupportActivity implements LifecycleP
         }
     }
 
+    /**
+     * 解析Intent
+     * @return false：finish(),true：继续初始化
+     */
     protected abstract boolean parseIntent();
+
+    /**
+     * 设置contentView
+     * parseIntent之后调用
+     */
     protected abstract void setUpContentView();
 
+    /**
+     * 初始化View相关
+     */
     protected abstract void setUpView();
 
+    /**
+     * 初始化数据相关
+     */
     protected abstract void setUpData();
 
     protected void onNavigationBtnClicked() {

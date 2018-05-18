@@ -15,6 +15,7 @@ import com.zurich.gankmaterial.GankConstans;
 import com.zurich.gankmaterial.R;
 import com.zurich.gankmaterial.base.BaseActivity;
 import com.zurich.gankmaterial.base.BaseFragment;
+import com.zurich.gankmaterial.gankDatas.SampleListActivity;
 import com.zurich.gankmaterial.splash.SplashActivity;
 
 import butterknife.BindView;
@@ -127,8 +128,8 @@ public class MainActivity extends BaseActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
+        if (id == R.id.sample_list) {
+            startActivity(new Intent(MainActivity.this, SampleListActivity.class));
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {
