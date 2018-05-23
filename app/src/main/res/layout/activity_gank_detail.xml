@@ -6,8 +6,8 @@
 
     <include layout="@layout/widget_toolbar"/>
 
-    <android.support.v4.widget.NestedScrollView
+    <FrameLayout
         android:id="@+id/nestScroll_gank_detail"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent" />
 </LinearLayout>

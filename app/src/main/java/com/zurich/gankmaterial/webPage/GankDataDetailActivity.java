@@ -2,11 +2,11 @@ package com.zurich.gankmaterial.webPage;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.zurich.gankmaterial.R;
@@ -25,7 +25,7 @@ public class GankDataDetailActivity extends BaseActivity {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.nestScroll_gank_detail)
-    NestedScrollView nestScrollGankDetail;
+    FrameLayout contentLayout;
     private GankData gankData;
     private ProgressWebView mWebView;
 
@@ -36,10 +36,10 @@ public class GankDataDetailActivity extends BaseActivity {
 
     @Override
     protected void setUpView() {
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         mWebView = new ProgressWebView(getApplicationContext());
         mWebView.setLayoutParams(params);
-        nestScrollGankDetail.addView(mWebView);
+        contentLayout.addView(mWebView);
     }
 
     @Override
@@ -72,7 +72,7 @@ public class GankDataDetailActivity extends BaseActivity {
         mWebView.removeAllViews();
         mWebView.destroy();
         mWebView = null;
-        nestScrollGankDetail.removeAllViews();
+        contentLayout.removeAllViews();
         super.onDestroy();
     }
 
