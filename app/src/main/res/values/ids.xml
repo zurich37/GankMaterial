@@ -5,4 +5,5 @@
     <item name="toolbar_title" type="id" />
     <item name="swipeRefreshLayout" type="id" />
     <item name="recyclerView" type="id" />
+    <item name="pullToRefreshRecycler" type="id" />
 </resources>

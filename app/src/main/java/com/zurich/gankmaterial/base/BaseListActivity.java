@@ -1,12 +1,12 @@
 package com.zurich.gankmaterial.base;
 
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
 import com.zurich.gankmaterial.R;
 import com.zurich.gankmaterial.widget.DividerItemDecoration;
+import com.zurich.gankmaterial.widget.PullToRefreshLayout;
 
 import java.util.ArrayList;
 
@@ -17,14 +17,17 @@ import butterknife.BindView;
  *
  * @author weixinfei
  */
-public abstract class BaseListActivity<T> extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener {
+public abstract class BaseListActivity<T> extends BaseActivity implements PullToRefreshLayout.OnRecyclerRefreshListener {
 
-    @BindView(R.id.swipeRefreshLayout)
-    protected SwipeRefreshLayout swipeRefreshLayout;
-    @BindView(R.id.recyclerView)
-    protected RecyclerView recyclerView;
+    @BindView(R.id.pullToRefreshRecycler)
+    protected PullToRefreshLayout recycler;
     protected BaseListAdapter baseAdapter;
     protected ArrayList<T> dataList;
+
+    @Override
+    protected boolean parseIntent() {
+        return false;
+    }
 
     @Override
     protected void setUpContentView() {
@@ -33,26 +36,16 @@ public abstract class BaseListActivity<T> extends BaseActivity implements SwipeR
 
     @Override
     protected void setUpView() {
-        swipeRefreshLayout.setOnRefreshListener(this);
+
     }
 
     @Override
     protected void setUpData() {
-        recyclerView.setLayoutManager(getLayoutManager());
-        RecyclerView.ItemDecoration decoration = getItemDecoration();
-        recyclerView.addItemDecoration(decoration);
+        recycler.setLayoutManager(getLayoutManager());
+        recycler.setItemDecoration(getItemDecoration());
+        recycler.setOnRefreshListener(this);
         baseAdapter = new BaseListAdapter();
-        recyclerView.setAdapter(baseAdapter);
-    }
-
-    public void setRefreshing() {
-        swipeRefreshLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                swipeRefreshLayout.setRefreshing(true);
-                onRefresh();
-            }
-        });
+        recycler.setAdapter(baseAdapter);
     }
 
     protected RecyclerView.LayoutManager getLayoutManager() {
@@ -63,12 +56,12 @@ public abstract class BaseListActivity<T> extends BaseActivity implements SwipeR
         return new DividerItemDecoration(getApplicationContext(), R.drawable.list_divider);
     }
 
-    protected abstract BaseViewHolder getViewHodler(ViewGroup parent, int viewType);
+    protected abstract BaseViewHolder getViewHolder(ViewGroup parent, int viewType);
 
     public class BaseListAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         @Override
         public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            return getViewHodler(parent, viewType);
+            return getViewHolder(parent, viewType);
         }
 
         @Override
@@ -90,4 +83,5 @@ public abstract class BaseListActivity<T> extends BaseActivity implements SwipeR
             return 0;
         }
     }
+
 }

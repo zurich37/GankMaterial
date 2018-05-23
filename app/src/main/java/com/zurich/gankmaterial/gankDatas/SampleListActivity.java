@@ -31,24 +31,24 @@ public class SampleListActivity extends BaseListActivity<String> {
     @Override
     protected void setUpData() {
         super.setUpData();
-        setRefreshing();
+        recycler.setRefreshing();
     }
 
     @Override
-    protected BaseViewHolder getViewHodler(ViewGroup parent, int viewType) {
+    protected BaseViewHolder getViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_sample_list_item, parent, false);
         return new SampleViewHolder(view);
     }
 
     @Override
-    public void onRefresh() {
+    public void onRefresh(int action) {
         dataList = new ArrayList<>();
         dataList.clear();
         for (int i = 0; i < 50; i++) {
             dataList.add("sample list item " + i);
         }
         baseAdapter.notifyDataSetChanged();
-        swipeRefreshLayout.setRefreshing(false);
+        recycler.onRefreshCompleted();
     }
 
     class SampleViewHolder extends BaseViewHolder {
