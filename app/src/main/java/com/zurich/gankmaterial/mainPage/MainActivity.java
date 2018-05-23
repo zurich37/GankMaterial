@@ -55,6 +55,9 @@ public class MainActivity extends BaseActivity
             loadRootFragment(R.id.fl_container, homeFragment);
         } else {
             homeFragment = findFragment(HomeFragment.class);
+            if (homeFragment == null) {
+                homeFragment = HomeFragment.newInstance();
+            }
         }
         navigationView.setNavigationItemSelectedListener(this);
         setUpMenu(R.menu.main);

@@ -10,6 +10,8 @@ import com.zurich.gankmaterial.widget.DividerItemDecoration;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+
 /**
  * 基础列表页面
  *
@@ -17,7 +19,9 @@ import java.util.ArrayList;
  */
 public abstract class BaseListActivity<T> extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener {
 
+    @BindView(R.id.swipeRefreshLayout)
     protected SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.recyclerView)
     protected RecyclerView recyclerView;
     protected BaseListAdapter baseAdapter;
     protected ArrayList<T> dataList;
@@ -29,9 +33,7 @@ public abstract class BaseListActivity<T> extends BaseActivity implements SwipeR
 
     @Override
     protected void setUpView() {
-        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
         swipeRefreshLayout.setOnRefreshListener(this);
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
     }
 
     @Override
