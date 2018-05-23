@@ -35,7 +35,7 @@ public abstract class BaseActivity extends SupportActivity implements LifecycleP
     public static final int MODE_HOME = 3;
     private AppBarLayout appbar;
     private Toolbar toolbar;
-    private TextView toolbar_title;
+    private TextView title;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -135,7 +135,7 @@ public abstract class BaseActivity extends SupportActivity implements LifecycleP
             appbar = (AppBarLayout) findViewById(R.id.appbar);
             toolbar = (Toolbar) findViewById(R.id.toolbar);
             toolbar.setTitle("");
-            toolbar_title = (TextView) findViewById(R.id.toolbar_title);
+            title = (TextView) findViewById(R.id.toolbar_title);
 
             if (mode == MODE_BACK) {
                 toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
@@ -157,8 +157,8 @@ public abstract class BaseActivity extends SupportActivity implements LifecycleP
      * @param titleResId
      */
     protected void setUpTitle(int titleResId) {
-        if (titleResId > 0 && toolbar_title != null) {
-            toolbar_title.setText(titleResId);
+        if (titleResId > 0 && title != null) {
+            title.setText(titleResId);
         }
     }
 
