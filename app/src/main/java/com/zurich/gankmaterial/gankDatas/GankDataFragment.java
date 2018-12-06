@@ -1,12 +1,12 @@
 package com.zurich.gankmaterial.gankDatas;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.widget.Space;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.legacy.widget.Space;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -119,7 +119,6 @@ public class GankDataFragment extends BaseFragment implements GankDatasContract.
     @Override
     public void showMoreDatas(List<GankData> datas) {
         if (!datas.isEmpty()) {
-            hintView.hidden();
             gankDataAdapter.addData(datas);
             if (datas.size() == 20) {
                 gankDataAdapter.loadMoreComplete();
@@ -151,7 +150,7 @@ public class GankDataFragment extends BaseFragment implements GankDatasContract.
 
     @Override
     public void showError(String msg, View.OnClickListener onClickListener) {
-
+        hintView.error(msg).show();
     }
 
     @Override

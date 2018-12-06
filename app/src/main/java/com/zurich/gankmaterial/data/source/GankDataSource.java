@@ -1,6 +1,6 @@
 package com.zurich.gankmaterial.data.source;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.zurich.gankmaterial.data.GankData;
 

@@ -1,6 +1,6 @@
 package com.zurich.gankmaterial.localApps;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.zurich.gankmaterial.data.LocalAppInfo;
 import com.zurich.gankmaterial.data.source.LocalAppInfoRepository;

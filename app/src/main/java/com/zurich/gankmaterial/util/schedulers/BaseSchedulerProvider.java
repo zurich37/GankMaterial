@@ -1,6 +1,6 @@
 package com.zurich.gankmaterial.util.schedulers;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import rx.Scheduler;
 

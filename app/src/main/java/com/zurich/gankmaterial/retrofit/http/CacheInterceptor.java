@@ -1,6 +1,6 @@
 package com.zurich.gankmaterial.retrofit.http;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.zurich.gankmaterial.util.CommonUtils;
 

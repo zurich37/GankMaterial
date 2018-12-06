@@ -1,19 +1,20 @@
-package com.zurich.gankmaterial.gankDatas;
+package com.zurich.gankmaterial.gankDetail;
 
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.zurich.gankmaterial.R;
 import com.zurich.gankmaterial.base.BaseFragment;
 import com.zurich.gankmaterial.data.GankData;
+import com.zurich.gankmaterial.gankDatas.GankDatasContract;
 import com.zurich.gankmaterial.widget.CustomLoadMoreView;
 import com.zurich.gankmaterial.widget.HintView;
 

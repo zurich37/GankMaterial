@@ -1,13 +1,12 @@
 package com.zurich.gankmaterial.gankDatas;
 
-import android.support.annotation.NonNull;
-
 import com.zurich.gankmaterial.data.GankData;
 import com.zurich.gankmaterial.data.source.GankDataRepository;
 import com.zurich.gankmaterial.retrofit.subscriber.ProgressSubscriber;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -78,6 +77,7 @@ public class GankDatasPresenter implements GankDatasContract.Presenter {
     }
 
     private void processDatas(@NonNull List<GankData> datas, boolean isLoadMore) {
+        mView.hideLoading();
         if (datas.isEmpty()) {
             processEmpty();
         } else {
@@ -90,7 +90,6 @@ public class GankDatasPresenter implements GankDatasContract.Presenter {
     }
 
     private void processEmpty() {
-        mView.hideLoading();
         mView.showEmpty("无内容", null);
     }
 

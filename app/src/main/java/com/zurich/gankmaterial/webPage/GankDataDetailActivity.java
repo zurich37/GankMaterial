@@ -2,7 +2,7 @@ package com.zurich.gankmaterial.webPage;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.widget.Toolbar;
+import androidx.appcompat.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;

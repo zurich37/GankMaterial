@@ -1,4 +1,4 @@
-package com.zurich.gankmaterial.gankDatas;
+package com.zurich.gankmaterial.gankDetail;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.zurich.gankmaterial.R;

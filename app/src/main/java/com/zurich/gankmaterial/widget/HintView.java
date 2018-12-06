@@ -25,6 +25,8 @@ public class HintView extends FrameLayout {
     private ViewGroup loadingRootView;
     private ViewStub emptyViewStub;
     private ViewGroup emptyRootView;
+    private ViewStub errorViewStub;
+    private ViewGroup errorRootView;
     private ProgressBar loadingPbView;
 
     public static final int DEFAULT = 0;
@@ -38,6 +40,7 @@ public class HintView extends FrameLayout {
     private Runnable delayAnimationHiddenRunnable;
 
     private TextView emptyMessageTextView;
+    private TextView errorMessageTextView;
 
     private HintView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -62,6 +65,11 @@ public class HintView extends FrameLayout {
         // 添加页面空子页面
         emptyViewStub = new ViewStub(getContext(), R.layout.widget_empty);
         addView(emptyViewStub);
+
+        // 添加加载失败子页面
+        errorViewStub = new ViewStub(getContext(), R.layout.widget_error);
+        addView(errorViewStub);
+
 
         setVisibility(GONE);
     }
@@ -115,9 +123,7 @@ public class HintView extends FrameLayout {
             if (hintView.emptyViewStub != null) {
                 View rootView = hintView.emptyViewStub.inflate();
                 hintView.emptyViewStub = null;
-
                 hintView.emptyMessageTextView = (TextView) hintView.findViewById(R.id.empty_hint);
-
                 hintView.emptyRootView = (ViewGroup) rootView;
             }
 
@@ -127,6 +133,9 @@ public class HintView extends FrameLayout {
             // 隐藏掉其它的
             if (hintView.loadingRootView != null) {
                 hintView.loadingRootView.setVisibility(View.GONE);
+            }
+            if (hintView.errorRootView != null) {
+                hintView.errorRootView.setVisibility(View.GONE);
             }
 
             // 显示出来
@@ -180,6 +189,67 @@ public class HintView extends FrameLayout {
             hintView.setVisibility(VISIBLE);
             hintView.setClickable(true);
             hintView.loadingTime = System.currentTimeMillis();
+        }
+    }
+
+    /**
+     * 显示页面空页面
+     *
+     * @param message
+     * @return
+     */
+    public EmptyBuilder error(String message) {
+        currentStatus = FAILURE;
+        return new EmptyBuilder(this, message);
+    }
+
+    public static class ErrorBuilder {
+        private HintView hintView;
+        private String message;
+
+        private ErrorBuilder(HintView hintView, String message) {
+            this.hintView = hintView;
+            this.message = message;
+        }
+
+        /**
+         * 设置提示消息
+         */
+        public ErrorBuilder message(String message) {
+            this.message = message;
+            return this;
+        }
+
+        /**
+         * 显示
+         */
+        public void show() {
+            hintView.tryCancelDelayedHidden();
+
+            if (hintView.errorViewStub != null) {
+                View rootView = hintView.errorViewStub.inflate();
+                hintView.errorViewStub = null;
+
+                hintView.errorMessageTextView = hintView.findViewById(R.id.error_hint);
+
+                hintView.errorRootView = (ViewGroup) rootView;
+            }
+
+            // 设置提示文本以及按钮点击事件
+            hintView.errorMessageTextView.setText(message);
+
+            // 隐藏掉其它的
+            if (hintView.loadingRootView != null) {
+                hintView.loadingRootView.setVisibility(View.GONE);
+            }
+            if (hintView.emptyRootView != null) {
+                hintView.emptyRootView.setVisibility(View.GONE);
+            }
+
+            // 显示出来
+            hintView.errorRootView.setVisibility(View.VISIBLE);
+            hintView.setVisibility(VISIBLE);
+            hintView.setClickable(true);
         }
     }
 

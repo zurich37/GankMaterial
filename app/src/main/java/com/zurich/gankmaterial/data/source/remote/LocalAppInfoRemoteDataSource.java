@@ -2,7 +2,7 @@ package com.zurich.gankmaterial.data.source.remote;
 
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.zurich.gankmaterial.GankApplication;
 import com.zurich.gankmaterial.data.LocalAppInfo;

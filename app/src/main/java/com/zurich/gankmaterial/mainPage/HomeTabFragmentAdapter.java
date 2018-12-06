@@ -1,8 +1,8 @@
 package com.zurich.gankmaterial.mainPage;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.zurich.gankmaterial.data.source.GankAndroidDataRepository;
 import com.zurich.gankmaterial.data.source.GankIOSDataRepository;
@@ -11,7 +11,7 @@ import com.zurich.gankmaterial.data.source.GankWelfareDataRepository;
 import com.zurich.gankmaterial.data.source.remote.GankRemoteDataSource;
 import com.zurich.gankmaterial.gankDatas.GankDataFragment;
 import com.zurich.gankmaterial.gankDatas.GankDatasPresenter;
-import com.zurich.gankmaterial.gankDatas.WelfareDataFragment;
+import com.zurich.gankmaterial.gankDetail.WelfareDataFragment;
 
 /**
  * tab adapter
